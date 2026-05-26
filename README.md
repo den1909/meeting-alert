@@ -1,23 +1,23 @@
 # Airplane Meetings ✈
 
-Ein kleines Cartoon-Flugzeug zieht 5 Minuten vor jedem Termin oder jeder Erinnerung ein Banner mit dem Titel über alle deine Bildschirme.
+A tiny cartoon airplane tows a banner with the upcoming event's title across all your displays — 5 minutes before every calendar event or reminder.
 
-Native macOS-Menüleisten-App. Liest Termine aus der Kalender-App und Erinnerungen aus der Erinnerungen-App — funktioniert daher mit allem was du in macOS synchronisiert hast (Google Calendar, iCloud, Exchange, Outlook etc.).
+Native macOS menu bar app. Reads events from the Calendar app and reminders from the Reminders app, so it works with whatever you have synced into macOS (Google Calendar, iCloud, Exchange, Outlook, …).
 
 ## Features
 
-- ✈ Cartoon-Flugzeug mit wehendem Stoff-Banner fliegt über **alle** angeschlossenen Bildschirme
-- ⏰ Triggert automatisch **5 Minuten** vor jedem Termin/jeder Erinnerung
-- 📅 Liest aus **Kalender** und **Erinnerungen** (EventKit) — alle synchronisierten Konten werden unterstützt
-- 🖥 Multi-Display-Support: Banner fliegt durchgehend von rechts nach links über alle Monitore
-- 🚀 Optionaler Autostart beim Anmelden (`SMAppService`)
-- 🌟 Findbar via Spotlight nach Installation
-- 🔒 Komplett lokal — keine Cloud, keine Tracker, keine Internetverbindung
+- ✈ Cartoon airplane with a waving fabric banner flies across **all** connected displays
+- ⏰ Auto-triggers **5 minutes** before every event / reminder
+- 📅 Reads from **Calendar** and **Reminders** (EventKit) — all synced accounts supported
+- 🖥 Multi-display support: banner flies continuously from the rightmost screen to the leftmost
+- 🚀 Optional auto-start at login (`SMAppService`)
+- 🌟 Spotlight-searchable after installation
+- 🔒 Fully local — no cloud, no tracking, no network
 
-## Voraussetzungen
+## Requirements
 
-- macOS 13 (Ventura) oder neuer
-- Xcode Command Line Tools (für `swift build`)
+- macOS 13 (Ventura) or newer
+- Xcode Command Line Tools (for `swift build`)
 
 ```sh
 xcode-select --install
@@ -28,80 +28,80 @@ xcode-select --install
 ```sh
 git clone https://github.com/den1909/meeting-alert.git
 cd meeting-alert
-./build.sh        # baut die .app
-./install.sh      # kopiert nach ~/Applications, registriert bei Spotlight
+./build.sh        # builds the .app
+./install.sh      # copies to ~/Applications, registers with Spotlight
 ```
 
-Nach `install.sh`:
+After `install.sh`:
 - Spotlight (`Cmd+Space`) → "Airplane Meetings" → Enter
-- Beim ersten Start fragt macOS nach Kalender- und Erinnerungen-Berechtigung
-- Im ✈-Menü oben rechts: **"Beim Anmelden starten"** für Autostart
+- On first launch macOS asks for Calendar and Reminders permissions
+- In the ✈ menu (top right): **"Start at Login"** for auto-start
 
-## Bedienung
+## Usage
 
-In der Menüleiste erscheint ein ✈-Icon. Klick öffnet das Menü:
+A ✈ icon appears in the menu bar. Clicking it opens the menu:
 
-| Eintrag                  | Funktion                                                                 |
-| ------------------------ | ------------------------------------------------------------------------ |
-| Nächster Termin          | Übersicht der nächsten 6 Termine/Erinnerungen (`·` = Termin, `○` = Erinnerung) |
-| **Test-Flug starten** (⌘T) | Löst sofort eine Animation aus — gut zum Testen                          |
-| **Kalender neu laden** (⌘R) | Forciert einen Refresh                                                   |
-| **Beim Anmelden starten**  | Toggle für Autostart                                                     |
-| Beenden (⌘Q)             | App beenden                                                              |
+| Item                       | What it does                                                                |
+| -------------------------- | --------------------------------------------------------------------------- |
+| Next event                 | List of the next 6 events / reminders (`·` = event, `○` = reminder)         |
+| **Test Flight** (⌘T)       | Fires the animation immediately — useful for testing                        |
+| **Reload Calendar** (⌘R)   | Forces a refresh                                                            |
+| **Start at Login**         | Toggle auto-start                                                           |
+| Quit (⌘Q)                  | Quit the app                                                                |
 
-## Konfiguration
+## Configuration
 
-Aktuell sind die wichtigsten Werte als Konstanten im Code:
+Key values are currently exposed as constants in the code:
 
-| Wert                | Datei                                            | Default |
-| ------------------- | ------------------------------------------------ | ------- |
-| Vorlaufzeit         | `Sources/.../Calendar/AlertScheduler.swift`      | 5 min   |
-| Poll-Intervall      | `Sources/.../Calendar/AlertScheduler.swift`      | 20 s    |
-| Geschwindigkeit     | `Sources/.../UI/AirplaneOverlayWindow.swift`     | 260 px/s |
-| Banner-Farbe / -Größe | `Sources/.../UI/AirplaneFlightView.swift`      | rot / 600×120 px |
-| Y-Position (% von unten) | `Sources/.../UI/AirplaneOverlayWindow.swift` | 0.68    |
+| Value                       | File                                              | Default          |
+| --------------------------- | ------------------------------------------------- | ---------------- |
+| Lead time                   | `Sources/.../Calendar/AlertScheduler.swift`       | 5 min            |
+| Poll interval               | `Sources/.../Calendar/AlertScheduler.swift`       | 20 s             |
+| Animation speed             | `Sources/.../UI/AirplaneOverlayWindow.swift`      | 260 px/s         |
+| Banner color / size         | `Sources/.../UI/AirplaneFlightView.swift`         | red / 600×120 px |
+| Y position (% from bottom)  | `Sources/.../UI/AirplaneOverlayWindow.swift`      | 0.68             |
 
-## Architektur
+## Architecture
 
 ```
 Sources/AirplaneMeetings/
-├── main.swift                    Entry Point
+├── main.swift                    Entry point
 ├── App/
-│   ├── AppDelegate.swift         App-Lifecycle, wiring
-│   ├── MenuBarController.swift   NSStatusItem + Menü
-│   └── LoginItemManager.swift    SMAppService Wrapper
+│   ├── AppDelegate.swift         App lifecycle, wiring
+│   ├── MenuBarController.swift   NSStatusItem + menu
+│   └── LoginItemManager.swift    SMAppService wrapper
 ├── Calendar/
 │   ├── EventManager.swift        EventKit (EKEvent + EKReminder → FlightTrigger)
-│   └── AlertScheduler.swift      Timer-basierter Trigger (5min vor startDate)
+│   └── AlertScheduler.swift      Timer-based trigger (5 min before startDate)
 └── UI/
-    ├── AirplaneOverlayWindow.swift  Per-Screen-Window-Animation (Timer-driven)
-    └── AirplaneFlightView.swift     SwiftUI Banner (Canvas), gerendert via ImageRenderer
+    ├── AirplaneOverlayWindow.swift  Per-screen window animation (timer-driven)
+    └── AirplaneFlightView.swift     SwiftUI banner (Canvas), rendered via ImageRenderer
 ```
 
-**Wie die Animation funktioniert:**
+**How the animation works:**
 
-1. Beim Trigger wird ein statisches Banner-Bild (Flugzeug + roter Banner + Text) einmalig per `ImageRenderer` aus einer SwiftUI-View erzeugt.
-2. Für jeden angeschlossenen Bildschirm wird ein transparentes, klick-durchlässiges `NSWindow` über alle Spaces erstellt — Window-Frame deckt den Bildschirm + Padding ab.
-3. Ein 60-fps-Timer berechnet jede Frame die globale X-Position. Jedes Fenster setzt sein internes `NSImageView` auf die Window-lokale X-Koordinate. Das Banner ist immer nur auf einem Bildschirm sichtbar — auf den anderen ist es off-bounds geclippt. Visuell wirkt es wie ein durchgehender Flug.
-4. Y-Position ist pro Bildschirm relativ (68% von unten), sodass sie auf unterschiedlich großen / versetzten Bildschirmen jeweils sinnvoll sitzt.
+1. On trigger, a static banner image (airplane + red banner + text) is rendered once from a SwiftUI view via `ImageRenderer`.
+2. For every connected display, a transparent, click-through `NSWindow` is created above all spaces — the window's frame covers that screen plus padding.
+3. A 60 fps timer computes the global X position every frame. Each window updates its inner `NSImageView` to the window-local X. The banner is only visible on a single display at any moment — on the others it's clipped off-bounds. Visually it looks like one continuous flight.
+4. Y position is per-screen-relative (68 % from bottom), so it sits sensibly on differently sized or vertically offset displays.
 
-Die ImageRenderer-Variante umgeht ein hartnäckiges macOS-SwiftUI-Problem, bei dem `Text`-Views in separaten CATextLayern gerendert werden und nicht synchron mit Container-Animationen mitlaufen.
+The ImageRenderer approach sidesteps a stubborn SwiftUI/macOS issue where `Text` views render in separate `CATextLayer`s and don't stay in sync with parent container animations.
 
-## Bauen & Entwickeln
+## Build & Develop
 
 ```sh
-# Nur kompilieren (in .build/)
+# Compile only (output in .build/)
 swift build -c release
 
-# .app-Bundle erzeugen (in build/Airplane Meetings.app)
+# Produce the .app bundle (in build/Airplane Meetings.app)
 ./build.sh
 
-# Nach ~/Applications installieren
+# Install to ~/Applications
 ./install.sh
 ```
 
-Nach Code-Änderungen: `./build.sh` neu ausführen und App neu starten (im Menü ✈ → Beenden, dann wieder via Spotlight starten).
+After code changes: re-run `./build.sh` and restart the app (✈ menu → Quit, then launch via Spotlight again).
 
-## Lizenz
+## License
 
-MIT — siehe `LICENSE`.
+MIT — see `LICENSE`.
