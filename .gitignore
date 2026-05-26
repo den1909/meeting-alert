@@ -1,0 +1,22 @@
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# Xcode
+xcuserdata/
+*.xcodeproj/project.xcworkspace/
+*.xcuserstate
+
+# Build-Artefakte
+build/
+
+# macOS
+.DS_Store
+
+# Debug
+/tmp/airplane_*
+
+# IDE
+.vscode/
+.idea/

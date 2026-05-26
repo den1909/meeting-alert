@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleDevelopmentRegion</key>
+    <string>en</string>
+    <key>CFBundleExecutable</key>
+    <string>AirplaneMeetings</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.dennisbacher.airplanemeetings</string>
+    <key>CFBundleInfoDictionaryVersion</key>
+    <string>6.0</string>
+    <key>CFBundleName</key>
+    <string>AirplaneMeetings</string>
+    <key>CFBundleDisplayName</key>
+    <string>Airplane Meetings</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>CFBundleShortVersionString</key>
+    <string>1.0.0</string>
+    <key>CFBundleVersion</key>
+    <string>1</string>
+    <key>LSMinimumSystemVersion</key>
+    <string>13.0</string>
+    <key>LSUIElement</key>
+    <true/>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>NSCalendarsUsageDescription</key>
+    <string>Airplane Meetings liest deine Kalendertermine, um dich 5 Minuten vor einem Meeting mit einem fliegenden Banner zu benachrichtigen.</string>
+    <key>NSCalendarsFullAccessUsageDescription</key>
+    <string>Airplane Meetings liest deine Kalendertermine, um dich 5 Minuten vor einem Meeting mit einem fliegenden Banner zu benachrichtigen.</string>
+    <key>NSRemindersUsageDescription</key>
+    <string>Airplane Meetings liest deine Erinnerungen, um dich 5 Minuten vor Fälligkeit mit einem fliegenden Banner zu benachrichtigen.</string>
+    <key>NSRemindersFullAccessUsageDescription</key>
+    <string>Airplane Meetings liest deine Erinnerungen, um dich 5 Minuten vor Fälligkeit mit einem fliegenden Banner zu benachrichtigen.</string>
+    <key>NSSupportsAutomaticTermination</key>
+    <false/>
+    <key>NSSupportsSuddenTermination</key>
+    <false/>
+</dict>
+</plist>
